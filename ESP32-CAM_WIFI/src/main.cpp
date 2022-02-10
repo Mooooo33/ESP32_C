@@ -4,18 +4,18 @@
 #include "../lib/ArduinoJson/ArduinoJson.h"
 
 
-// JOSNæ˜¯ä¸€ç§è½»é‡çº§çš„æ•°æ®äº¤æ¢æ ¼å¼ï¼Œéµå¾ªä¸€ä¸‹è§„åˆ™ï¼š
-// 1.å¹¶åˆ—çš„æ•°æ®ä¹‹é—´ç”¨é€—å·(,)åˆ†éš”
-// 2.æ˜ å°„ç”¨å†’å·(:)è¡¨ç¤º
-// 3.å¹¶åˆ—æ•°æ®çš„é›†åˆ(æ•°ç»„)ç”¨æ–¹æ‹¬å·([])è¡¨ç¤º
-// 4.æ˜ å°„çš„é›†åˆ(å¯¹è±¡)ç”¨å¤§æ‹¬å·({})è¡¨ç¤º
+// JOSNÊÇÒ»ÖÖÇáÁ¿¼¶µÄÊı¾İ½»»»¸ñÊ½£¬×ñÑ­Ò»ÏÂ¹æÔò£º
+// 1.²¢ÁĞµÄÊı¾İÖ®¼äÓÃ¶ººÅ(,)·Ö¸ô
+// 2.Ó³ÉäÓÃÃ°ºÅ(:)±íÊ¾
+// 3.²¢ÁĞÊı¾İµÄ¼¯ºÏ(Êı×é)ÓÃ·½À¨ºÅ([])±íÊ¾
+// 4.Ó³ÉäµÄ¼¯ºÏ(¶ÔÏó)ÓÃ´óÀ¨ºÅ({})±íÊ¾
 
-//	WiFiçš„åˆå§‹åŒ–å’Œè¿æ¥
+//	WiFiµÄ³õÊ¼»¯ºÍÁ¬½Ó
 void WiFi_Connect()
 {
-	WiFi.begin("FFF", "acb1235678");//SSID,PASSWORD
-	while (WiFi.status() != WL_CONNECTED)//æŸ¥çœ‹WIFIæ˜¯å¦æˆåŠŸè¿æ¥
-	{ //è¿™é‡Œæ˜¯é˜»å¡ç¨‹åºï¼Œç›´åˆ°è¿æ¥æˆåŠŸ
+	WiFi.begin("SSID", "password");//SSID,PASSWORD
+	while (WiFi.status() != WL_CONNECTED)//²é¿´WIFIÊÇ·ñ³É¹¦Á¬½Ó
+	{ //ÕâÀïÊÇ×èÈû³ÌĞò£¬Ö±µ½Á¬½Ó³É¹¦
 		delay(300);
 		Serial.print(".");
 	}
@@ -34,18 +34,18 @@ void setup()
 	Serial.println("WiFi connected");
 
 	Serial.println("IP address: ");
-	Serial.println(WiFi.localIP());//æ‰“å°IPåœ°å€ print IP address
+	Serial.println(WiFi.localIP());//´òÓ¡IPµØÖ· print IP address
 }
 
 // bilibili api: follower
-String UID = "442412984";//æ­¤å¤„éœ€è¦ä¿®æ”¹
-String followerUrl = "http://api.bilibili.com/x/relation/stat?vmid=" + UID; // ç²‰ä¸æ•°æ¥å£
+String UID = "*********";//´Ë´¦ĞèÒªĞŞ¸Ä
+String followerUrl = "http://api.bilibili.com/x/relation/stat?vmid=" + UID; // ·ÛË¿Êı½Ó¿Ú
 
-long follower = 0; // ç²‰ä¸æ•°
+long follower = 0; // ·ÛË¿Êı
 
 DynamicJsonDocument doc(1024);
 
-//	è·å–ç²‰ä¸æ•°
+//	»ñÈ¡·ÛË¿Êı
 void getBiliBiliFollower()
 {
 	HTTPClient http;
@@ -57,18 +57,18 @@ void getBiliBiliFollower()
 		// httpCode will be negative on error
 		Serial.printf("HTTP Get Code: %d\r\n", httpCode);
 
-		if (httpCode == HTTP_CODE_OK) // æ”¶åˆ°æ­£ç¡®çš„å†…å®¹
+		if (httpCode == HTTP_CODE_OK) // ÊÕµ½ÕıÈ·µÄÄÚÈİ
 		{
 			String resBuff = http.getString();
 
-			//	è¾“å‡ºç¤ºä¾‹ï¼š{"mid":123456789,"following":226,"whisper":0,"black":0,"follower":867}}
+			//	Êä³öÊ¾Àı£º{"mid":123456789,"following":226,"whisper":0,"black":0,"follower":867}}
 			Serial.println(resBuff);
 
-			//	ä½¿ç”¨ArduinoJson_6.xç‰ˆæœ¬ï¼Œå…·ä½“è¯·ç§»æ­¥ï¼šhttps://github.com/bblanchon/ArduinoJson
-			deserializeJson(doc, resBuff); //å¼€å§‹ä½¿ç”¨Jsonè§£æ
+			//	Ê¹ÓÃArduinoJson_6.x°æ±¾£¬¾ßÌåÇëÒÆ²½£ºhttps://github.com/bblanchon/ArduinoJson
+			deserializeJson(doc, resBuff); //¿ªÊ¼Ê¹ÓÃJson½âÎö
 			follower = doc["data"]["follower"];
 //			Serial.printf("Follers: %ld \r\n", follower);
-			Serial.printf("ä¸‰ç®±çš„bç«™ç²‰ä¸: %ld \r\n", follower);
+			Serial.printf("followers num: %ld \r\n", follower);
 
 		}
 	}
