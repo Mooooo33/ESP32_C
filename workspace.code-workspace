@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "ESP32-CAM_TouchInterrupt"
+		},
+		{
+			"name": "ESP32-CAM_Timer_PWM",
+			"path": "ESP32-CAM_Timer_PWM"
+		},
+		{
+			"name": "ESP32-CAM_WIFI",
+			"path": "ESP32-CAM_WIFI"
+		}
+	],
+    "settings": {}
+}
