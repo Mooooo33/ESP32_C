@@ -14,7 +14,12 @@
         {
             "name": "ESP32-CAM_BLUETOOTH",
             "path": "ESP32-CAM_BLUETOOTH"
-        }
+        },
+        {
+            "name": "ESP32-CAM_Blinker",
+            "path": "ESP32-CAM_Blinker"
+        },
+
     ],
     "settings": {}
 }
