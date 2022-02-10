@@ -38,7 +38,7 @@ void setup()
 }
 
 // bilibili api: follower
-String UID = "8120635";
+String UID = "442412984";//此处需要修改
 String followerUrl = "http://api.bilibili.com/x/relation/stat?vmid=" + UID; // 粉丝数接口
 
 long follower = 0; // 粉丝数
@@ -67,7 +67,9 @@ void getBiliBiliFollower()
 			//	使用ArduinoJson_6.x版本，具体请移步：https://github.com/bblanchon/ArduinoJson
 			deserializeJson(doc, resBuff); //开始使用Json解析
 			follower = doc["data"]["follower"];
-			Serial.printf("Follers: %ld \r\n", follower);
+//			Serial.printf("Follers: %ld \r\n", follower);
+			Serial.printf("三箱的b站粉丝: %ld \r\n", follower);
+
 		}
 	}
 	else
